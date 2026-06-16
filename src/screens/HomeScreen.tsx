@@ -1,18 +1,21 @@
 import React from 'react';
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { useAuthStore } from '../store/useAuthStore';
 
 export default function HomeScreen() {
+  const { user } = useAuthStore();
+
   return (
     <SafeAreaView className="flex-1 bg-slate-50">
       <ScrollView className="px-4 py-6">
         <View className="mb-6">
           <Text className="text-3xl font-bold text-slate-900 tracking-tight">Welcome Back,</Text>
-          <Text className="text-xl font-medium text-slate-500">Alex</Text>
+          <Text className="text-xl font-medium text-slate-500">{user?.name || 'Guest'}</Text>
         </View>
 
         <View className="bg-indigo-600 rounded-3xl p-6 shadow-xl shadow-indigo-600/30 mb-8">
           <Text className="text-indigo-100 font-medium">Pro Meal Balance</Text>
-          <Text className="text-white text-4xl font-bold mt-1">12 Meals</Text>
+          <Text className="text-white text-4xl font-bold mt-1">Ready</Text>
           <TouchableOpacity className="bg-white/20 px-4 py-2 rounded-full self-start mt-4">
             <Text className="text-white font-semibold">Redeem Now</Text>
           </TouchableOpacity>

@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home, Coffee, Wallet, User } from 'lucide-react-native';
+import { useAuthStore } from '../store/useAuthStore';
 
 // Import Screens
 import HomeScreen from '../screens/HomeScreen';
 import MenuScreen from '../screens/MenuScreen';
 import WalletScreen from '../screens/WalletScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-export default function AppNavigator() {
+function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -31,5 +37,34 @@ export default function AppNavigator() {
       <Tab.Screen name="Wallet" component={WalletScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
+  );
+}
+
+export default function AppNavigator() {
+  const { user, token, isLoading, checkAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#6366f1" />
+      </View>
+    );
+  }
+
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {user && token ? (
+        <Stack.Screen name="Main" component={MainTabs} />
+      ) : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+        </>
+      )}
+    </Stack.Navigator>
   );
 }
