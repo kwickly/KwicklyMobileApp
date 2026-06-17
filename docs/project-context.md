@@ -33,3 +33,8 @@ This app is the 5th and final component of the Kwickly micro-frontend ecosystem,
 - [x] Implement JWT-based login/registration flows.
 - [x] Fetch live menu items and categories from the backend.
 - [x] Fetch live wallet balance and generate secure QR tokens.
+
+### Phase 3: Automated Testing (⏳ PENDING)
+- [ ] Install `jest` and `@testing-library/react-native`.
+- [ ] Write unit tests for JWT Storage and Auth Gate logic.
+- [ ] Verify test suite passes with 0 failures.
